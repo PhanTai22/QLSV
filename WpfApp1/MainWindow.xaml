@@ -1,0 +1,136 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfApp1"
+         mc:Ignorable="d" Loaded="Window_Loaded"
+        Title="MainWindow" Height="600" Width="800">
+    <Window.Resources>
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="100 0 0 0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Label" x:Key="Lable error">
+            <Setter Property="Foreground" Value="Red"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontStyle" Value="Italic"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="ComboBox">
+            <Setter Property="Width" Value="200"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="Button" x:Key="MyButton">
+            <Setter Property="Width" Value="80"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Margin" Value="3"/>
+            <Setter Property="Background" Value="#00a2b4"/>
+            <Setter Property="Foreground" Value="#fff"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Style.Resources>
+                <Style TargetType="Border">
+                    <Setter Property="CornerRadius" Value="20"/>
+                </Style>
+            </Style.Resources>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Foreground" Value="#000"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="280"/>
+            <ColumnDefinition Width="270"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3"
+               Content="CHƯƠNG TRÌNH QUẢN LÝ SINH VIÊN" HorizontalContentAlignment="Center"
+               FontSize="20" FontWeight="Bold" Margin="0 5 0 15"/>
+        <Label Grid.Row="1" Grid.Column="0" Content="Mã sinh viên" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Họ tên" />
+        <Label Grid.Row="3" Grid.Column="0" Content="Địa chỉ" />
+        <Label Grid.Row="4" Grid.Column="0" Content="Điểm" />
+        <Label Grid.Row="5" Grid.Column="0" Content="Lớp học" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="" Name="txtMasv"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="" Name="txtHoten"/>
+        <ComboBox Grid.Row="3" Grid.Column="1" SelectedIndex="0" x:Name="cboDiachi">
+            <ComboBoxItem>Hà Nội</ComboBoxItem>
+            <ComboBoxItem>Hải Phòng</ComboBoxItem>
+            <ComboBoxItem>Quảng Ninh</ComboBoxItem>
+            <ComboBoxItem>Nghệ An</ComboBoxItem>
+            <ComboBoxItem>Hải Dươngh</ComboBoxItem>
+        </ComboBox>
+
+        <TextBox Grid.Row="4" Grid.Column="1" Text="" Name="txtDiem"/>
+        <ComboBox Grid.Row="5" Grid.Column="1" SelectedIndex="0" x:Name="cboLophoc">
+            <!--<ComboBoxItem>Công nghệ thông tin</ComboBoxItem>
+            <ComboBoxItem>Kỹ thuật phần mềm</ComboBoxItem>
+            <ComboBoxItem>Khoa học máy tính</ComboBoxItem>-->
+        </ComboBox>
+        <Label Grid.Row="1" Grid.Column="2" Content="Error Message" 
+               Style="{StaticResource Lable error}" Name="errMasv"/>
+        <Label Grid.Row="2" Grid.Column="2" Content="Error Message" 
+               Style="{StaticResource Lable error}" Name="errHoten"/>
+        <Label Grid.Row="3" Grid.Column="2" Content="Error Message" 
+               Style="{StaticResource Lable error}" Name="errDiachi"/>
+        <Label Grid.Row="4" Grid.Column="2" Content="Error Message" 
+               Style="{StaticResource Lable error}" Name="errDiem"/>
+        <Label Grid.Row="5" Grid.Column="2" Content="Error Message" 
+               Style="{StaticResource Lable error}" Name="errlophoc"/>
+        <DataGrid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="3"
+                  Height="230" Width="600" Name="dgDanhsach" Margin="10"
+                  AutoGenerateColumns="False" SelectedCellsChanged="SelectedChanged_Click"
+                  HorizontalAlignment="Center" VerticalScrollBarVisibility="Auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mã sinh viên" Width="70" Binding="{Binding Masv}"/>
+                <DataGridTextColumn Header="Họ tên" Width="120" Binding="{Binding Hoten}"/>
+                <DataGridTextColumn Header="Địa chỉ" Width="90" Binding="{Binding Diachi}"/>
+                <DataGridTextColumn Header="Điểm" Width="70" Binding="{Binding Diem}"/>
+                <DataGridTextColumn Header="Mã lớp" Width="90" Binding="{Binding Malop}"/>
+                <DataGridTemplateColumn Header="Xóa sinh viên">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Click="Button_XoaDongClick">Xóa</Button>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <WrapPanel Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3" Margin="0 5 0 0"
+                   HorizontalAlignment="Center">
+            <Button Style="{StaticResource MyButton}" x:Name="btnThem" Click="btnThem_Click">
+                <AccessText>_Thêm</AccessText>
+            </Button>
+            <Button Style="{StaticResource MyButton}" x:Name="btnSua" Click="btnSua_Click">Sửa</Button>
+            <Button Style="{StaticResource MyButton}" x:Name="btnXoa" Click="btnXoa_Click">Xóa</Button>
+            <Button Style="{StaticResource MyButton}" x:Name="btnTim" Click="btnTim_Click">Tìm</Button>
+            <Button Style="{StaticResource MyButton}" x:Name="btnDong" Click="btnDong_Click">
+                <AccessText>Đón_g</AccessText>
+            </Button>
+        </WrapPanel>
+    </Grid>
+</Window>
